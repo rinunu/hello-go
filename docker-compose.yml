@@ -1,0 +1,46 @@
+version: '3'
+services:
+  bff:
+    container_name: hellogo-bff
+    image: rintarot/hellogo-bff
+    build: ./bff
+    working_dir: /home/node/app
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./bff/:/home/node/app:delegated
+    ports:
+      - "3000:3000"
+    command: "npm run dev"
+    depends_on:
+      - api
+  api:
+    container_name: hellogo-api
+    build: ./api
+    image: rintarot/hellogo-api
+    volumes:
+     - ./api:/go/src/github.com/rinunu/hello-go/api:delegated
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.6.35
+    container_name: hellogo-mysql
+    ports:
+      - "33306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+     - ./local-env/mysql/conf.d:/etc/mysql/conf.d
+     - ./local-env/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+     - mysql-volume:/var/lib/mysql
+  flyway:
+    image: boxfuse/flyway
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    depends_on:
+      - mysql
+volumes:
+  mysql-volume:
