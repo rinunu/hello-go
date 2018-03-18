@@ -4,7 +4,7 @@ go サンプル (RSS リーダー)
 
 ## セットアップ
 
-- [Docker for Mac](https://docs.docker.com/docker-for-mac/) をインストールしてね。
+- [Docker for Mac](https://docs.docker.com/docker-for-mac/) 18 以上をインストールしてね。
 
 
 ```
@@ -15,6 +15,9 @@ docker-compose up
 ```
 
 ## 日常の操作
+
+- API サーバはこちら [API サーバ README](api/README.md)
+- BFF サーバはこちら [BFF サーバ README](bff/README.md)
 
 ### サーバ群起動
 
